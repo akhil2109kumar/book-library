@@ -1,0 +1,10 @@
+.header-bg {
+    height: 65px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: static;
+    border: 0;
+    background-position: center;
+    background-repeat: repeat-x;
+    background-color: #f4f2e9;
+}
