@@ -14,6 +14,7 @@ app.use(cookieParser());
 process.on("uncaughtException", (err) => {
   console.error("UNCAUGHT EXCEPTION ? Shutting down...");
   console.error("Error?", err.message);
+  console.log("Error?");
   process.exit(1);
 });
 
