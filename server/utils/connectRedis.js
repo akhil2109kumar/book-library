@@ -17,9 +17,10 @@ const connectRedis = async () => {
 
 connectRedis();
 
-redisClient.on("connect", () =>
-  console.log("Redis client connected successfully")
-);
+redisClient.on("connect", () => {
+  const success = "ddd";
+  // console.log("Redis client connected successfully")
+});
 
 redisClient.on("error", (err) => console.error(err));
 

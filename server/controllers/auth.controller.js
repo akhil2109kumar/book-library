@@ -3,8 +3,9 @@ import userModel from "../models/user.model.js";
 import redisClient from "../utils/connectRedis.js";
 import { signJwt, verifyJwt } from "../utils/jwt.js";
 import errorHandler from "./error.controller.js";
-const accessTokenExpireIn = process.env.JWT_ACCESS_TOKEN_EXPIRES_IN;
-const refreshTokenExpireIn = process.env.JWT_REFRESH_TOKEN_EXPIRES_IN;
+
+const accessTokenExpireIn = process.env.JWT_ACCESS_TOKEN_EXPIRES_IN ?? 60;
+const refreshTokenExpireIn = process.env.JWT_REFRESH_TOKEN_EXPIRES_IN ?? 60;
 
 const cookieOptions = {
   httpOnly: true,
@@ -53,7 +54,7 @@ async function signTokens(user) {
   await redisClient.set(user.id, JSON.stringify(user), {
     EX: 60 * 60,
   });
-  console.log(process.env.JWT_ACCESS_TOKEN_EXPIRES_IN);
+
   const access_token = signJwt({ user: user.id }, "JWT_ACCESS_PRIVATE_KEY", {
     expiresIn: `${process.env.JWT_ACCESS_TOKEN_EXPIRES_IN}m`,
   });
@@ -67,9 +68,7 @@ async function signTokens(user) {
 
 const login = async (parent, { input: { email, password } }, { req, res }) => {
   try {
-    const user = await userModel
-      .findOne({ email })
-      .select("+password +verified");
+    const user = await userModel.findOne({ email });
 
     if (!user || !(await user.comparePasswords(password, user.password))) {
       throw new AuthenticationError("Invalid email or password");

@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: [8, "Password must be more than 8 characters"],
-      select: false,
+      // select: false,
     },
     passwordConfirm: {
       type: String,
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
     verified: {
       type: Boolean,
       default: true,
-      select: false,
+      // select: false,
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
