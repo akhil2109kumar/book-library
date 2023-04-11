@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: "../config.env" });
 
 const localUri = process.env.MONGODB_URI_LOCAL;
-
 async function connectDB() {
   try {
     await mongoose.connect(localUri);

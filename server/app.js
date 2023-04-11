@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import validateEnv from "./utils/validateEnv.js";
 import path from "path";
 
-dotenv.config();
+dotenv.config({ path: "../config.env" });
 validateEnv();
 
 const app = express();
