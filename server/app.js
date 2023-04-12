@@ -2,12 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import validateEnv from "./utils/validateEnv.js";
-import path from "path";
 
-dotenv.config({ path: "../config.env" });
+dotenv.config();
 validateEnv();
 
 const app = express();
+
+app.use(express.static("uploads"));
 
 app.use(cookieParser());
 

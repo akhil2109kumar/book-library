@@ -8,17 +8,21 @@ import app from "./app.js";
 import { Mutation, Query } from "./resolvers/index.js";
 import DateTime from "./resolvers/datetime.js";
 import getAuthUser from "./middleware/authUser.js";
-// import { graphqlUploadExpress } from "graphql-upload";
+import { graphqlUploadExpress } from "graphql-upload";
 
 const httpServer = http.createServer(app);
 
 const corsOptions = {
-  origin: ["http://localhost:8000"],
+  origin: [
+    "http://localhost:8000",
+    "http://localhost:9000",
+    "http://localhost:3001",
+  ],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
-// app.use(graphqlUploadExpress());
+app.use(graphqlUploadExpress());
 
 const resolvers = {
   DateTime,
@@ -39,7 +43,6 @@ const resolvers = {
   await server.start();
 
   server.applyMiddleware({ app, cors: corsOptions });
-
   const port = process.env.PORT;
   await new Promise((resolve) => httpServer.listen(port, "0.0.0.0", resolve));
   console.log(
