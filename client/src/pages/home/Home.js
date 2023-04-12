@@ -11,11 +11,11 @@ const Home = () => {
       <div className='container position-relative'>
         <div className='row mx-0 justify-content-end position-absolute w-100'>
           <div className='col-md-3 mt-3'>
-            <div class="card rounded-3 text-center px-4 py-3">
-              <div class="card-header border-0 bg-white">
+            <div className="card rounded-3 text-center px-4 py-3">
+              <div className="card-header border-0 bg-white">
                 <h5>Discover & read more</h5>
               </div>
-              <div class="card-body px-0">
+              <div className="card-body px-0">
                 <Button type="submit" className="btn btn-outline-dark btn-warning text-dark px-4 py-2 my-1 rounded-2 w-100">
                   Continue with Amazon
                 </Button>
@@ -27,7 +27,7 @@ const Home = () => {
                 </Button>
                             
               </div>
-              <div class="card-footer bg-white pt-3">
+              <div className="card-footer bg-white pt-3">
                 <div>
                   Already a member? <Link to="/signin" className="text-decoration-none">Sign in</Link>
                 </div>

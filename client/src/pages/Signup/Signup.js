@@ -3,6 +3,10 @@ import { Form, Col, Button } from "react-bootstrap";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
+import {toast} from "react-toastify";
+// import { signUpSchema } from "../../utils/schema"
+import { useMutation } from '@apollo/client';
+import { SIGNUP_USER } from '../../gql/userQueries';
 
 import "./signup.css"
 
@@ -13,15 +17,34 @@ const SignupSchema = Yup.object().shape({
     .min(5, "Atleast 6 characters long")
     .max(50, "Too Long")
     .required(),
-  confirmPassword: Yup.string()
+  passwordConfirm: Yup.string()
     .required("Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
 const Signup = () => {
+  const [signupUser, { loading, error, data }] = useMutation(SIGNUP_USER, {
+    onError: (error) => {
+      //handle error
+    },
+  });
 
-  const handleSubmit = (values, event) => {
-    console.log("-----", values);
+  const handleSubmit = (values, {resetForm}) => {
+    signupUser({ variables: { input: { ...values } } })
+      .then((result) => {
+        const { errors, data } = result;
+        if(data.signupUser.status === 'success') {
+          toast("Registered successfully !");
+          resetForm({values: ''});
+        }
+
+        if (errors.name === "ApolloError") {
+          toast(errors.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -37,7 +60,7 @@ const Signup = () => {
               name: "",
               email: "",
               password: "",
-              confirmPassword: "",
+              passwordConfirm: "",
             }}
           >
             {({
@@ -115,31 +138,31 @@ const Signup = () => {
                   <Form.Control
                     type="password"
                     placeholder="Re-enter password"
-                    name="confirmPassword"
+                    name="passwordConfirm"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.confirmPassword}
-                    isValid={!errors.confirmPassword && touched.confirmPassword}
-                    isInvalid={touched.confirmPassword && errors.confirmPassword}
+                    value={values.passwordConfirm}
+                    isValid={!errors.passwordConfirm && touched.passwordConfirm}
+                    isInvalid={touched.passwordConfirm && errors.passwordConfirm}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {errors.confirmPassword}
+                    {errors.passwordConfirm}
                   </Form.Control.Feedback>
 
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
 
-                <Button type="submit" as={Col} sm="4" className="btn-signup btn btn-dark my-3">Create account</Button>
+                <Button type="button" onClick={(event) => handleSubmit(event)} as={Col} sm="4" className="btn-signup btn btn-dark my-3">Create account</Button>
                 <div>
-                Already have an account? <Link to="/signin" className="text-dark">Sign in</Link>
-                </div>  
-               
+                  Already have an account? <Link to="/signin" className="text-dark">Sign in</Link>
+                </div>
+
               </Form>
             )}
           </Formik>
-        </div>  
-      </div>  
-      
+        </div>
+      </div>
+
     </>
   );
 }

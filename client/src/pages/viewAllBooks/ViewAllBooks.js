@@ -7,7 +7,7 @@ const ViewAllBooks = () => {
         <div className='container py-4'>
             <h2 className='fs-3 pb-3 text-start'>My Books</h2>
             <div className='table-responsive'>
-                <table class="table text-start">
+                <table className="table text-start">
                     <thead>
                         <tr>
                             <th scope="col">Cover</th>

@@ -2,42 +2,63 @@ import React from 'react'
 import { Form, Col, Button } from "react-bootstrap";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./signin.css"
+import { SIGNIN_USER } from '../../gql/userQueries';
+import { useMutation } from '@apollo/client';
+import { useSelector, useDispatch } from 'react-redux';
 
-const SignupSchema = Yup.object().shape({
-  name: Yup.string().required("Required"),
+const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .min(5, "Atleast 6 characters long")
     .max(50, "Too Long")
     .required(),
-  confirmPassword: Yup.string()
-    .required("Required")
-    .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
 const Signin = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmit = (values, event) => {
-    console.log("-----", values);
+  const [loginUser, { loading, error, data }] = useMutation(SIGNIN_USER, {
+    onError: (error) => {
+      console.log(error);
+      // handle error here
+    },
+  });
+
+  const handleSubmit = (values) => {
+    loginUser({ variables: { input: { ...values } } })
+      .then((result) => {
+        const { errors, data } = result;
+        if (data.loginUser.status === "success") {
+          dispatch({ type: 'GET_LOGIN_SUCCESS', payload: data.loginUser });
+          localStorage.setItem("isLoggedIn", true);
+          navigate('/dashboard');
+        }
+        if (errors.name === "ApolloError") {
+          toast(errors.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <>
-     <div className="container py-4">
+      <div className="container py-4">
         <h2 className="fs-1 pb-3">
           Sign in
         </h2>
         <Formik
-          validationSchema={SignupSchema}
+          validationSchema={SignInSchema}
           onSubmit={handleSubmit}
           validateOnChange={false}
           initialValues={{
-            name: "",
             email: "",
             password: "",
-            confirmPassword: "",
           }}
         >
           {({
@@ -95,7 +116,7 @@ const Signin = () => {
 
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-              <Button type="submit" as={Col} sm="4" className="btn-signup btn btn-dark my-3">Sign in</Button>
+              <Button type="button" onClick={(event) => handleSubmit(event)} as={Col} sm="4" className="btn-signup btn btn-dark my-3">Sign in</Button>
               <div>
                 <Link to="/register" className="text-dark">Sign up</Link>
               </div>

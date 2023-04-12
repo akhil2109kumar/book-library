@@ -1,11 +1,17 @@
 import React from 'react';
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import './header.css';
 import profileImg from "./assets/profile.png";
 import notificationIcon from "./assets/notification.png";
 import Dropdown from 'react-bootstrap/Dropdown';
-
 const Header = () => {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear();
+    navigate('/');
+  }
+
   return (
     <>
       <div className='d-flex align-items-center header-bg'>
@@ -26,8 +32,8 @@ const Header = () => {
                   </li>
                 </ul>
               </div>
-              <div class="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
+              <div className="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
+                <ul className="navbar-nav">
                   <li className="nav-item">
                     <Link className="nav-link active" aria-current="page" to="/">
                       <img height={30} width={30} src={notificationIcon} alt="Notification" />
@@ -39,9 +45,7 @@ const Header = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                      <Dropdown.Item href="#/action-1" onClick={logout}>Logout</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </ul>
