@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { GET_ALL_BOOKS, UPDATE_RATING_COLLECTIONS } from '../../gql/bookQueries';
 import { useMutation, useQuery } from '@apollo/client';
 import { useSelector } from 'react-redux';
-
+import Rating from '@mui/material/Rating';
 
 const ViewAllBooks = () => {
     const { loading, error, data } = useQuery(GET_ALL_BOOKS);
@@ -14,13 +14,7 @@ const ViewAllBooks = () => {
     const userInfo = useSelector((state) => state.user);
     // const [addToLibrary, { loading, error }] = useMutation(UPDATE_RATING_COLLECTIONS);
 
-    console.log('----', allBooksList)
-
-
-
-
     useEffect(() => {
-        console.log('---@/store', bookId, bookStatus)
         if (bookId !== "") {
             // changeHandler(bookStatus);
         }
@@ -63,8 +57,6 @@ const ViewAllBooks = () => {
                             <th scope="col">Author</th>
                             <th scope="col">Rating</th>
                             <th scope="col">Avg Rating</th>
-                            <th scope="col">Shelves</th>
-                            <th scope="col">Review</th>
                             <th scope="col">Date read</th>
                             <th scope="col">Date Added</th>
                             <th scope="col"></th>
@@ -82,19 +74,20 @@ const ViewAllBooks = () => {
                                     <td><Link href='#' className='text-decoration-none'>{item.author}</Link></td>
                                     <td>{item.avgRating}</td>
                                     <td>
-                                        <div className='text-start'>
-                                            <Link href='#' className='star text-decoration-none'>&#9734;</Link>
-                                            <Link href='#' className='star text-decoration-none'>&#9734;</Link>
-                                            <Link href='#' className='star text-decoration-none'>&#9734;</Link>
-                                            <Link href='#' className='star text-decoration-none'>&#9734;</Link>
-                                            <Link href='#' className='star text-decoration-none'>&#9734;</Link>
-                                        </div>
+                                        <Rating
+                                            name="simple-controlled"
+                                            readOnly
+                                            value={item.avgRating}
+                                        />
                                     </td>
                                     <td><Link href='#' className='text-decoration-none'>to read <small>[edit]</small></Link></td>
                                     <td><Link href='#' className='text-decoration-none'>Write a review</Link></td>
                                     <td>not set <small>[edit]</small></td>
                                     <td>Apr, 10 2023</td>
-                                    {/* <td><Link href='#' className='text-decoration-none'>Edit view</Link></td> */}
+                                    <td><button onClick={() => {
+                                        setBookId(item.id)
+                                        setBookStatus("WANT_TO_READ");
+                                    }} className='text-decoration-none'>Want to read</button></td>
                                 </tr>
                             )
                         })}

@@ -1,8 +1,80 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./mybook.css"
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useMutation } from '@apollo/client';
+import { MY_BOOKS_MUTATION, UPDATE_RATING_COLLECTIONS } from '../../gql/bookQueries';
+// import { setMyBooks } from '@/store/slices/book.slice';
+// import { useAppDispatch } from '@/hooks';
 
 const MyBook = () => {
+  // const router = useRouter();
+  // const dispatch = useAppDispatch();
+  // const { user } = useSelector((state) => state.user);
+  const books = useSelector((state) => state.books);
+
+  const [rating, setRating] = useState(0);
+  const [bookStatus, setBookStatus] = useState("");
+  const [bookId, setBookId] = useState("");
+  const [bookStastics, setbookStastics] = useState({})
+  const [getMyBooks, { loading: getLoading, error: addError, data }] = useMutation(MY_BOOKS_MUTATION);
+  const [addToLibrary, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_RATING_COLLECTIONS);
+
+  // useEffect(() => {
+  //   if (user.id) {
+  //     getMyBooks({ variables: { userId: user.id } })
+  //       .then(({ data }) => {
+  //         console.log('-----')
+  //         // dispatch(setMyBooks(data.myBooks.myLibrary))
+  //       }).catch(error => {
+  //         console.error(error);
+  //       });
+  //   }
+  // }, [getMyBooks, user.id, updateLoading]);
+
+  
+  // useEffect(() => {
+  //   if (bookId !== "") {
+  //     changeHandler(bookStatus, rating);
+  //   }
+  // }, [rating, bookStatus, bookId]);
+
+  // let calculateObjects = () => {
+  //   if (books.myBooks.length) {
+  //     const counts = books.myBooks.reduce((acc, book) => {
+  //       const collect = book.collect;
+  //       if (collect === "WANT_TO_READ") {
+  //         acc.wantToRead += 1;
+  //       } else if (collect === "READING") {
+  //         acc.reading += 1;
+  //       } else if (collect === "READ") {
+  //         acc.read += 1;
+  //       }
+  //       return acc;
+  //     }, { wantToRead: 0, reading: 0, read: 0 });
+  //     setbookStastics(counts)
+  //     return counts;
+  //   }
+  // }
+
+  // useEffect(() => { calculateObjects() }, [getLoading, updateLoading])
+
+  // const changeHandler = (bookStatus, rating) => {
+  //   addToLibrary({
+  //     variables: {
+  //       bookId: bookId,
+  //       userId: 'user.id',
+  //       collect: bookStatus,
+  //       rating: rating
+  //     },
+  //   }).then(data => {
+  //     // Handle success
+  //   }).catch(error => {
+  //     console.error(error);
+  //     // Handle error
+  //   });
+  // }
+
   return (
     <div>
       <div className='container py-4 mt-4'>

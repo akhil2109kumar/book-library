@@ -93,7 +93,7 @@ const AddBook = () => {
                         <Form.Group as={Col} sm="4" className="mx-auto text-start mb-3" controlId="validationFormik02">
                             <Form.Label>Cover Image</Form.Label>
                             <Form.Control
-                                type="text"
+                                type="file"
                                 placeholder="Add author name here"
                                 name="coverImage"
                                 value={values.coverImage}
