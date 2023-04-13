@@ -6,6 +6,7 @@ import { createWriteStream } from "fs";
 import mongoose from "mongoose";
 import path from "path";
 import { v4 } from "uuid";
+import { ForbiddenError } from "apollo-server-core";
 
 const addBook = async (parent, args, context) => {
   const { title, author, date, coverImage } = args;
@@ -50,7 +51,6 @@ const allBooks = async (parent, args, context) => {
   });
 
   let filteredBooks = books;
-  console.log(filteredBooks);
   if (collection) {
     filteredBooks = filteredBooks.filter((book) =>
       book.reviews.some((review) => review.collect === collection)
@@ -124,7 +124,6 @@ const addToLibrary = async (
       });
     }
 
-    console.log(addLibrary);
     const myLibrary = await myLibraryModel
       .findOne({ _id: addLibrary._id })
       .populate("userId")
