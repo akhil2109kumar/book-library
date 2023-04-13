@@ -35,6 +35,7 @@ const Signin = () => {
         if (data.loginUser.status === "success") {
           dispatch({ type: 'GET_LOGIN_SUCCESS', payload: data.loginUser });
           localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("token", data.loginUser.access_token);
           navigate('/dashboard');
         }
         if (errors.name === "ApolloError") {

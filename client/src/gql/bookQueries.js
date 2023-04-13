@@ -47,9 +47,32 @@ mutation AddToLibrary($bookId: String!, $userId: String!, $collect: String!, $ra
   }
 }`;
 
-export const MY_BOOKS_MUTATION = gql`
-  mutation MyBooks($userId: String!) {
-    myBooks(input: {userId: $userId}) {
+export const MY_BOOKS_QUERY = gql`
+  query MyBooks {
+    myBooks {
+      status
+      myBooks {
+        id
+        rating
+        collect
+        bookId {
+          id
+          title
+          author
+          date
+          avgRating
+          coverImage
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+
+export const ADD_TO_LIBRARY = gql`
+  mutation AddToLibrary($bookId: String!) {
+    addToLibrary(input: {bookId: $bookId}) {
       status
       myLibrary {
         id
@@ -68,3 +91,27 @@ export const MY_BOOKS_MUTATION = gql`
     }
   }
 `;
+
+export const ADD_BOOKS_MUTATION = gql`
+  mutation AddBook($title: String!, $author: String!, $coverImage: Upload!) {
+    addBook(title: $title, author: $author, coverImage: $coverImage) {
+      status
+    }
+  }
+`;
+
+export const UPLOAD_IMAGE_MUTATION = gql`
+  mutation UploadImage($file: Upload!) {
+    uploadImage(file: $file) {
+      id
+      url
+    }
+  }
+`;
+
+// export const CREATE_BOOK_MUTATION = gql`
+//   mutation CreateBook($input: CreateBookInput!) {
+//     createBook(input: $input) {
+//       # ...
+//   }
+// }`;
