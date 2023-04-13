@@ -4,26 +4,23 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 
 const SignupSchema = Yup.object().shape({
-    name: Yup.string().required("Required"),
-    email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string()
-        .min(5, "Atleast 6 characters long")
-        .max(50, "Too Long")
-        .required(),
-    confirmPassword: Yup.string()
-        .required("Required")
-        .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    title: Yup.string().required("Required"),
+    author: Yup.string().required("Required"),
+    date: Yup.string().required("Required"),
+    coverImage: Yup.string().required("Required"),
+    collection: Yup.string().required("Required"),
+    
 });
 
 const AddBook = () => {
-    const handleSubmit = (values, event) => {
+    const handleSubmit = (values) => {
         console.log("-----", values);
     };
 
     return (
         <>
-        <div className="container py-4">
-            <h2 className="fs-1 pb-3">
+        <div className="container py-4 mt-4">
+            <h2 className="fs-2 pb-3">
                 Add Book
             </h2>
             <Formik
@@ -131,7 +128,7 @@ const AddBook = () => {
 
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
-                        <Button type="submit" as={Col} sm="4" className="btn-signup btn btn-dark my-3">Add Book</Button>
+                        <Button type="button" onClick={(event) => handleSubmit(event)} as={Col} sm="4" className="btn-signup btn btn-dark my-3">Add Book</Button>
                     </Form>
                 )}
             </Formik>

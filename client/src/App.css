@@ -32,7 +32,16 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.rightCard,
+.bookcard,
+.rightCard1 {
+    background-color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 15%);
 }

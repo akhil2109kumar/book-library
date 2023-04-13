@@ -49,7 +49,10 @@ const Signin = () => {
   return (
     <>
       <div className="container py-4">
-        <h2 className="fs-1 pb-3">
+        <div className='pb-4'>
+          <Link className="navbar-brand fs-1 mx-0 text-dark fw-bold" to="/">BookLibrary</Link>
+        </div>
+        <h2 className="fs-2 pb-3">
           Sign in
         </h2>
         <Formik
@@ -116,10 +119,15 @@ const Signin = () => {
 
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-              <Button type="button" onClick={(event) => handleSubmit(event)} as={Col} sm="4" className="btn-signup btn btn-dark my-3">Sign in</Button>
               <div>
-                <Link to="/register" className="text-dark">Sign up</Link>
+               <Button type="button" onClick={(event) => handleSubmit(event)} as={Col} sm="4" className="btn-signup btn btn-dark my-3 mx-auto">Sign in</Button>
               </div>
+              <h6 className='sign-border position-relative mb-0'>
+              </h6>
+               <div>
+               <Button type="button" onClick={(event) => handleSubmit(event)} as={Col} sm="4" className="btn btn-outline-dark bg-transparent btn-linksignup text-dark my-3  mx-auto">Sign Up</Button>
+              </div>
+              
             </Form>
           )}
         </Formik>

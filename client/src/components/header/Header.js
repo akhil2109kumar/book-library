@@ -6,7 +6,7 @@ import notificationIcon from "./assets/notification.png";
 import Dropdown from 'react-bootstrap/Dropdown';
 const Header = () => {
   const navigate = useNavigate();
-
+  const isLoggedInValue = localStorage.getItem("isLoggedIn");
   const logout = () => {
     localStorage.clear();
     navigate('/');
@@ -22,34 +22,37 @@ const Header = () => {
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
-              <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <Link className="nav-link active" aria-current="page" to="/dashboard">Home</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/booklist">My Books</Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <Link className="nav-link active" aria-current="page" to="/">
-                      <img height={30} width={30} src={notificationIcon} alt="Notification" />
-                    </Link>
-                  </li>
-                  <Dropdown   >
-                    <Dropdown.Toggle variant="light" className='profile-icon' id="dropdown-basic">
-                      <img width={30} height={30} style={{borderRadius:"50%"}} src={profileImg} alt="Profile" />
-                    </Dropdown.Toggle>
+              {isLoggedInValue &&
+                <>
+                  <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
+                      <li className="nav-item">
+                        <Link className="nav-link active" aria-current="page" to="/dashboard">Home</Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link className="nav-link" to="/mybook">My Books</Link>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
+                    <ul className="navbar-nav">
+                      <li className="nav-item">
+                        <Link className="nav-link active" aria-current="page" to="/">
+                          <img height={30} width={30} src={notificationIcon} alt="Notification" />
+                        </Link>
+                      </li>
+                      <Dropdown   >
+                        <Dropdown.Toggle variant="light" className='profile-icon' id="dropdown-basic">
+                          <img width={30} height={30} style={{ borderRadius: "50%" }} src={profileImg} alt="Profile" />
+                        </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1" onClick={logout}>Logout</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </ul>
-              </div>
+                        <Dropdown.Menu>
+                          <Dropdown.Item href="#/action-1" onClick={logout}>Logout</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </ul>
+                  </div>
+                </>}
             </div>
           </nav>
         </div>

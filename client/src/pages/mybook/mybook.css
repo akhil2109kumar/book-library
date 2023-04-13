@@ -1,0 +1,13 @@
+table {
+    color: #382110;
+}
+table a {
+    color: #00635d;
+}
+table a:hover {
+    color: #00635d;
+    text-decoration: underline !important;
+}
+table th {
+    border-color: gray;
+}

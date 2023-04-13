@@ -23,12 +23,12 @@ function App() {
         {!pathname.includes("register") && !pathname.includes("signin") &&
           <Header isLoggedIn={isLoggedIn}/>}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<LoggedInPrivateRoute isLoggedIn={isLoggedIn}><Home /></LoggedInPrivateRoute>} />
           <Route path="/signin" element={<LoggedInPrivateRoute isLoggedIn={isLoggedIn}><Signin /></LoggedInPrivateRoute>} />
-          <Route path="/register" element={<Signup />} />
-          <Route exact path="/addbook" element={<AddBook />} />
-          <Route exact path="/booklist" element={<ViewAllBooks />} />
-          <Route exact path="/mybook" element={<MyBook />} />
+          <Route path="/register" element={<LoggedInPrivateRoute isLoggedIn={isLoggedIn}><Signup /></LoggedInPrivateRoute>} />
+          <Route exact path="/addbook" element={<PrivateRoute isLoggedIn={isLoggedIn}><AddBook /></PrivateRoute>} />
+          <Route exact path="/booklist" element={<PrivateRoute isLoggedIn={isLoggedIn}><ViewAllBooks /></PrivateRoute>} />
+          <Route exact path="/mybook" element={<PrivateRoute isLoggedIn={isLoggedIn}><MyBook /></PrivateRoute>} />
           <Route exact path="/dashboard" element={<PrivateRoute isLoggedIn={isLoggedIn}><Dashboard /> </PrivateRoute>} />
         </Routes>
       <ToastContainer />
