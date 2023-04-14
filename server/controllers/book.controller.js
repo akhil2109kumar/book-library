@@ -9,7 +9,7 @@ import { v4 } from "uuid";
 import { ForbiddenError } from "apollo-server-core";
 
 const addBook = async (parent, args, context) => {
-  const { title, author, date, coverImage } = args;
+  const { title, author, coverImage } = args;
   const { file } = await coverImage;
 
   const { createReadStream, filename } = file;
@@ -25,7 +25,6 @@ const addBook = async (parent, args, context) => {
     const book = await bookModel.create({
       title,
       author,
-      date: new Date(date),
       coverImage: newFilename,
     });
     return {

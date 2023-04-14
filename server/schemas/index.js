@@ -59,6 +59,7 @@ const typeDefs = gql`
     title: String!
     author: String
     date: DateTime
+    avgRating: Float!
     coverImage: String
     createdAt: DateTime
     updatedAt: DateTime
@@ -78,7 +79,6 @@ const typeDefs = gql`
     addBook(
       title: String!
       author: String!
-      date: String!
       coverImage: Upload
     ): NewBookResponse!
 
@@ -127,7 +127,8 @@ const typeDefs = gql`
     id: ID!
     title: String!
     author: String!
-    date: String!
+    date: DateTime
+    avgRating: Float
     coverImage: String!
     createdAt: DateTime
     updatedAt: DateTime
@@ -144,7 +145,7 @@ const typeDefs = gql`
 
   input RatingInput {
     bookId: String!
-    rating: String!
+    rating: Int!
     collect: String!
   }
 

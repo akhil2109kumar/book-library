@@ -13,6 +13,7 @@ const bookSchema = new mongoose.Schema(
     },
     date: {
       type: Date,
+      default: Date.now(),
       required: true,
     },
     coverImage: {
