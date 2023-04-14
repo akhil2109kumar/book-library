@@ -42,16 +42,13 @@ Environment Variables [.env]
 environment variable is set -
 REACT_APP_SERVER_URL="http://127.0.0.1:8000/"
 
-Environment Variables [.env][backed]
+Environment Variables [.env][backend]
 
 NODE_ENV=development
 PORT=8080
-
 MONGODB_URI_LOCAL=mongodb://localhost:27017/book-library
-
 JWT_ACCESS_TOKEN_EXPIRES_IN=60
 JWT_REFRESH_TOKEN_EXPIRES_IN=60
-
 JWT_ACCESS_PRIVATE_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURS
 JWT_ACCESS_PUBLIC_KEY=LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tL
 JWT_REFRESH_PRIVATE_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkF
@@ -66,6 +63,7 @@ $ sudo apt install redis-server
 $ sudo systemctl restart redis.service
 $ sudo systemctl status redis
 ]
+4.Must have node version v14
 
 $ git clone https://github.com/akhil2109kumar/book-library
 $ cd book-library
