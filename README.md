@@ -58,10 +58,19 @@ JWT_REFRESH_PRIVATE_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkF
 JWT_REFRESH_PUBLIC_KEY=LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0L
 
 Local Setup Steps [BackEnd-Frontend]
+[Before local setup]
+1.Mongo database setup on local and URL set on backend env file.
+2.Install concurrently [$ npm i concurrently --force]
+3.Install Redis 0n local[
+$ sudo apt install redis-server
+$ sudo systemctl restart redis.service
+$ sudo systemctl status redis
+]
+
 $ git clone https://github.com/akhil2109kumar/book-library
 $ cd book-library
 $ npm run install-client --force
-$ npm i --force
+$ npm install --force
 $ npm start
 
 —----------------------------------------------------------------------------------------------------------------------------
