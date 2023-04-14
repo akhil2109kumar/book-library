@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import {  Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/home/Home';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Header from './components/header/Header';
@@ -16,12 +15,12 @@ import { useSelector } from 'react-redux';
 import { LoggedInPrivateRoute, PrivateRoute } from './components/header/privateRoute/PrivateRoute';
 
 function App() {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const isLoggedIn = useSelector(state => state.loginReducer.isLoggedIn);
   return (
     <div className="App">
-        {!pathname.includes("register") && !pathname.includes("signin") &&
-          <Header isLoggedIn={isLoggedIn}/>}
+      {!pathname.includes("register") && !pathname.includes("signin") &&
+        <Header isLoggedIn={isLoggedIn} />}
         <Routes>
           <Route path="/" element={<LoggedInPrivateRoute isLoggedIn={isLoggedIn}><Home /></LoggedInPrivateRoute>} />
           <Route path="/signin" element={<LoggedInPrivateRoute isLoggedIn={isLoggedIn}><Signin /></LoggedInPrivateRoute>} />

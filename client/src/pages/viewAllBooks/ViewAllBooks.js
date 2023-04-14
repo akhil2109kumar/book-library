@@ -3,13 +3,13 @@ import "./viewallbooks.css"
 import { Link } from "react-router-dom";
 import { GET_ALL_BOOKS, ADD_TO_LIBRARY , MY_BOOKS_QUERY} from '../../gql/bookQueries';
 import { useMutation, useQuery } from '@apollo/client';
-import { useSelector } from 'react-redux';
+
 import Rating from '@mui/material/Rating';
 
 const ViewAllBooks = () => {
     const token = localStorage.getItem('token') || "";
     const [ myBookdsId , setMyBooksId] = useState([]);
-    const { loading, error, data } = useQuery(GET_ALL_BOOKS);
+    const { data } = useQuery(GET_ALL_BOOKS);
     useQuery(MY_BOOKS_QUERY , {
         context: {
             headers:{
@@ -28,8 +28,7 @@ const ViewAllBooks = () => {
     const allBooksList = data ? data.allBooks.books : [];
     const [bookStatus, setBookStatus] = useState("");
     const [bookId, setBookId] = useState("");
-    const userInfo = useSelector((state) => state.user);
-    const [addToLibrary , { loading:mutationLoadin, error:mutationError, data:mutationData }] = useMutation(ADD_TO_LIBRARY , {
+    const [addToLibrary] = useMutation(ADD_TO_LIBRARY , {
         context: {
             headers:{
                 Authorization: `Bearer ${token}`,       
@@ -52,10 +51,6 @@ const ViewAllBooks = () => {
                 bookId: bookId,
             },
         }).then(data => {
-            console.log(data)
-            console.log('----success');
-            // Handle success
-            // router.push('/mybook')
             refreshData()
         }).catch(error => {
             // Handle error
@@ -90,7 +85,7 @@ const ViewAllBooks = () => {
                                 <tr key={index}>
                                     <td>
                                         <img src='https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71-tsVwvG+L._AC_UL600_SR600,600_.jpg'
-                                            className="" height="50" width="50" />
+                                            className="" height="50" width="50" alt="imgs"/>
                                     </td>
                                     <td><Link href='#' className='text-decoration-none'>{item.title}</Link></td>
                                     <td><Link href='#' className='text-decoration-none'>{item.author}</Link></td>

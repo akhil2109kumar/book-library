@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import "./mybook.css"
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { useMutation, useQuery } from '@apollo/client';
-import { MY_BOOKS_QUERY, UPDATE_RATING_COLLECTIONS } from '../../gql/bookQueries';
+import {  useQuery } from '@apollo/client';
+import { MY_BOOKS_QUERY } from '../../gql/bookQueries';
 import Rating from '@mui/material/Rating';
 import MyModal from '../../components/Modal';
 
@@ -11,14 +10,6 @@ const MyBook = () => {
   const token = localStorage.getItem('token') || "";
   const [myBooks, setMyBooks] = useState([]);
   const [collect, setCollect] = useState({ WANT_TO_READ: 0, READ: 0, READING: 0 });
-
-  const books = useSelector((state) => state.books);
-
-  const [rating, setRating] = useState(0);
-  const [bookStatus, setBookStatus] = useState("");
-  const [bookId, setBookId] = useState("");
-  const [bookStastics, setbookStastics] = useState({});
-
   const [showModal, setShowModal] = useState(false);
 
   useQuery(MY_BOOKS_QUERY, {
@@ -36,8 +27,6 @@ const MyBook = () => {
       setMyBooks(myBooks)
     },
   });
-  const [addToLibrary, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_RATING_COLLECTIONS);
-
 
 
   return ( <>
@@ -79,7 +68,7 @@ const MyBook = () => {
                           <tr key={index}>
                             <td>
                               <img src='https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71-tsVwvG+L._AC_UL600_SR600,600_.jpg'
-                                className="" height="50" width="50" />
+                                className="" height="50" width="50" alt="img"/>
                             </td>
                             <td><Link href='#' className='text-decoration-none'>{book.bookId.title}</Link></td>
                             <td><Link href='#' className='text-decoration-none'>{book.bookId.author}</Link></td>
@@ -92,7 +81,7 @@ const MyBook = () => {
                               />
                             </td>
                             <td>Apr, 10 2023</td>
-                            <td><Link href='#' className='text-decoration-none' onClick={() => setShowModal(true)}><MyModal /></Link></td>
+                            <td><Link href='#' className='text-decoration-none' onClick={() => setShowModal(true)}><MyModal bookId={book.bookId.id} showModal={showModal}/></Link></td>
                           </tr>
                         </>
                       )

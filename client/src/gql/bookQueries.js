@@ -17,36 +17,6 @@ query AllBooks {
   }
 }`;
 
-export const UPDATE_RATING_COLLECTIONS = gql`
-mutation AddToLibrary($bookId: String!, $userId: String!, $collect: String!, $rating: Int!) {
-  addToLibrary(input: {bookId: $bookId, userId: $userId, collect: $collect, rating: $rating}) {
-    status
-    myLibrary {
-      id
-      rating
-      collect
-      bookId {
-        id
-        title
-        author
-        date
-        coverImage
-        createdAt
-        updatedAt
-      }
-      userId {
-        id
-        name
-        email
-        photo
-        role
-        createdAt
-        updatedAt
-      }
-    }
-  }
-}`;
-
 export const MY_BOOKS_QUERY = gql`
   query MyBooks {
     myBooks {
@@ -109,9 +79,9 @@ export const UPLOAD_IMAGE_MUTATION = gql`
   }
 `;
 
-// export const CREATE_BOOK_MUTATION = gql`
-//   mutation CreateBook($input: CreateBookInput!) {
-//     createBook(input: $input) {
-//       # ...
-//   }
-// }`;
+export const ADD_RATING_AND_STATUS = gql`
+mutation AddRatingAndStatus($input:RatingInput!) {
+  addRatingAndStatus(input: $input) {
+    status
+  }
+}`;

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "./signin.css"
 import { SIGNIN_USER } from '../../gql/userQueries';
 import { useMutation } from '@apollo/client';
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -20,13 +20,7 @@ const SignInSchema = Yup.object().shape({
 const Signin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const [loginUser, { loading, error, data }] = useMutation(SIGNIN_USER, {
-    onError: (error) => {
-      console.log(error);
-      // handle error here
-    },
-  });
+  const [loginUser] = useMutation(SIGNIN_USER);
 
   const handleSubmit = (values) => {
     loginUser({ variables: { input: { ...values } } })
@@ -71,9 +65,7 @@ const Signin = () => {
             handleBlur,
             values,
             touched,
-            isValid,
             errors,
-            isValidating
           }) => (
             <Form
               noValidate

@@ -5,8 +5,6 @@ import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import {
     ADD_BOOKS_MUTATION,
-    UPLOAD_IMAGE_MUTATION,
-    CREATE_BOOK_MUTATION
 } from "../../gql/bookQueries";
 
 const addBookSchema = Yup.object().shape({
@@ -16,13 +14,12 @@ const addBookSchema = Yup.object().shape({
 });
 
 const AddBook = () => {
-    const [addBook, { loading, error, data }] = useMutation(ADD_BOOKS_MUTATION, {});
+    const [addBook] = useMutation(ADD_BOOKS_MUTATION, {});
     const handleSubmit = (values) => {
         
         const formData = new FormData();
         formData.append('image', values.coverImage);
-      
-        console.log('---Images', formData.get('image'));
+    
         addBook({
             variables:{
                 title: values.title,
@@ -44,7 +41,7 @@ const AddBook = () => {
             <div className="container py-4 mt-4">
                 <h2 className="fs-2 pb-3">Add Book</h2>
                 <Formik
-                    // validationSchema={addBookSchema}
+                    validationSchema={addBookSchema}
                     onSubmit={handleSubmit}
                     validateOnChange={false}
                     initialValues={{

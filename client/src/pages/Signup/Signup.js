@@ -4,10 +4,8 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import {toast} from "react-toastify";
-// import { signUpSchema } from "../../utils/schema"
 import { useMutation } from '@apollo/client';
 import { SIGNUP_USER } from '../../gql/userQueries';
-
 import "./signup.css"
 
 const SignupSchema = Yup.object().shape({
@@ -23,11 +21,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Signup = () => {
-  const [signupUser, { loading, error, data }] = useMutation(SIGNUP_USER, {
-    onError: (error) => {
-      //handle error
-    },
-  });
+  const [signupUser] = useMutation(SIGNUP_USER);
 
   const handleSubmit = (values, {resetForm}) => {
     signupUser({ variables: { input: { ...values } } })
@@ -69,9 +63,7 @@ const Signup = () => {
               handleBlur,
               values,
               touched,
-              isValid,
-              errors,
-              isValidating
+              errors
             }) => (
               <Form
                 noValidate
